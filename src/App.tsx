@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import AdminPanelView from './components/AdminPanelView';
 import AdvisorModal from './components/AdvisorModal';
 import CatalogView from './components/CatalogView';
+import HomeView from './components/HomeView';
 import MotoRunnerGame from './components/MotoRunnerGame';
 import Navbar from './components/Navbar';
 import TrainingQuizView from './components/TrainingQuizView';
@@ -36,7 +37,7 @@ import type {
 const ADMIN_EMAIL = (import.meta.env.VITE_ADMIN_EMAIL || 'ivan.moreno@vento.com').toLowerCase();
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<AppTab>('catalog');
+  const [activeTab, setActiveTab] = useState<AppTab>('home');
   const [user, setUser] = useState<LocalUser | null>(() => {
     const saved = localStorage.getItem('vp_academy_user');
     return saved ? JSON.parse(saved) : null;
@@ -230,7 +231,19 @@ export default function App() {
         isSyncing={isSyncing}
       />
 
-      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8">
+        {activeTab === 'home' && (
+          <HomeView
+            user={user}
+            advisorProfile={advisorProfile}
+            leaderboard={leaderboard}
+            isConnected={isCloudSeeded}
+            motorcycleCount={motorcycles.length}
+            policyCount={policies.length + timeGuides.length}
+            onNavigate={setActiveTab}
+            onOpenProfile={() => setProfileModalOpen(true)}
+          />
+        )}
         {activeTab === 'catalog' && (
           <CatalogView
             motorcycles={motorcycles}
@@ -287,12 +300,8 @@ export default function App() {
 
       <footer className="border-t border-zinc-200 bg-white py-5 text-xs text-zinc-500">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-          <span>
-            Vento &amp; Pistón Academy · Herramienta interna de capacitación técnica y garantías
-          </span>
-          <span>
-            Atención VENTO WA 56 1414 1172 · ayuda.vento.com · Pistón 55 5029 6960
-          </span>
+          <span>Vento &amp; Pistón Academy · Aprende, juega y crece en equipo</span>
+          <span>Atención VENTO WA 56 1414 1172 · ayuda.vento.com · Pistón 55 5029 6960</span>
         </div>
       </footer>
 

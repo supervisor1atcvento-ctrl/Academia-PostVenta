@@ -1,4 +1,4 @@
-import { Award, BookOpen, Gamepad2, RefreshCw, ShieldCheck, Sliders, UserCircle } from 'lucide-react';
+import { Award, BookOpen, Gamepad2, Home, RefreshCw, ShieldCheck, Sliders, UserCircle } from 'lucide-react';
 import type { AdvisorProfile, AppTab, LocalUser } from '../types';
 
 interface NavbarProps {
@@ -20,30 +20,27 @@ export default function Navbar({
   onRefreshData,
   isSyncing,
 }: NavbarProps) {
-  const navItems: { id: AppTab; label: string; icon: any }[] = [
-    { id: 'catalog', label: 'Catálogo Unidades', icon: BookOpen },
-    { id: 'warranty', label: 'Garantías y Tiempos', icon: ShieldCheck },
-    { id: 'training', label: 'Capacitación & Quiz', icon: Award },
+  const navItems: { id: AppTab; label: string; icon: typeof Home }[] = [
+    { id: 'home', label: 'Inicio', icon: Home },
+    { id: 'catalog', label: 'Unidades', icon: BookOpen },
+    { id: 'warranty', label: 'Garantías', icon: ShieldCheck },
+    { id: 'training', label: 'Retos & Quiz', icon: Award },
     { id: 'runner', label: 'Moto Runner', icon: Gamepad2 },
-    { id: 'admin', label: 'Admin Sheets', icon: Sliders },
+    { id: 'admin', label: 'Admin', icon: Sliders },
   ];
 
   return (
     <header className="sticky top-0 z-40 border-b border-zinc-800 bg-[#231F20] text-white shadow-md">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#F28F17] font-display text-2xl font-extrabold text-[#231F20]">
-            V&P
-          </div>
+        <button onClick={() => onSelectTab('home')} className="flex items-center gap-3 text-left" aria-label="Ir al inicio">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#F28F17] font-display text-2xl font-extrabold text-[#231F20]">V&amp;P</div>
           <div>
-            <h1 className="font-display text-xl font-bold uppercase tracking-wide text-white leading-none">
-              Vento &amp; Pistón <span className="text-[#F28F17]">Academy</span>
-            </h1>
-            <p className="text-[11px] text-zinc-400">Base de Datos Conectada a Google Sheets</p>
+            <h1 className="font-display text-xl font-bold uppercase leading-none tracking-wide text-white">Vento &amp; Pistón <span className="text-[#F28F17]">Academy</span></h1>
+            <p className="text-[11px] text-zinc-400">Aprende · juega · avanza</p>
           </div>
-        </div>
+        </button>
 
-        <nav className="flex flex-wrap items-center gap-1.5">
+        <nav aria-label="Navegación principal" className="flex flex-wrap items-center gap-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const active = activeTab === item.id;
@@ -51,11 +48,8 @@ export default function Navbar({
               <button
                 key={item.id}
                 onClick={() => onSelectTab(item.id)}
-                className={`flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold transition ${
-                  active
-                    ? 'bg-[#F28F17] text-[#231F20]'
-                    : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
-                }`}
+                aria-current={active ? 'page' : undefined}
+                className={`flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-xs font-semibold transition sm:px-3 ${active ? 'bg-[#F28F17] text-[#231F20]' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'}`}
               >
                 <Icon className="h-4 w-4" />
                 <span>{item.label}</span>
@@ -74,21 +68,11 @@ export default function Navbar({
             <RefreshCw className={`h-3.5 w-3.5 text-[#F28F17] ${isSyncing ? 'animate-spin' : ''}`} />
             <span className="hidden sm:inline">{isSyncing ? 'Sincronizando...' : 'Sincronizar'}</span>
           </button>
-
-          <button
-            onClick={onOpenProfileModal}
-            className="flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-xs font-medium hover:border-[#F28F17]"
-          >
+          <button onClick={onOpenProfileModal} className="flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-xs font-medium hover:border-[#F28F17]">
             <UserCircle className="h-4 w-4 text-[#F28F17]" />
             <div className="text-left">
-              <div className="font-semibold text-white">
-                {advisorProfile?.displayName || user?.displayName || 'Iniciar Sesión'}
-              </div>
-              {advisorProfile && (
-                <div className="font-mono text-[10px] text-[#F28F17]">
-                  {advisorProfile.totalPoints} pts
-                </div>
-              )}
+              <div className="font-semibold text-white">{advisorProfile?.displayName || user?.displayName || 'Identificarme'}</div>
+              {advisorProfile && <div className="font-mono text-[10px] text-[#F28F17]">{advisorProfile.totalPoints} pts</div>}
             </div>
           </button>
         </div>

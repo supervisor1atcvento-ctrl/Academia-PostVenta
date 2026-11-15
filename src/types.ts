@@ -1,4 +1,4 @@
-export type AppTab = 'catalog' | 'warranty' | 'training' | 'runner' | 'admin';
+export type AppTab = 'home' | 'catalog' | 'warranty' | 'training' | 'runner' | 'admin';
 export type BrandType = 'VENTO' | 'AMERICAN PISTON';
 export type QuizTopic = 'catalog' | 'warranty' | 'times' | 'mixed';
 
