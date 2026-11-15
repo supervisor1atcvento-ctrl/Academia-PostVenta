@@ -1,0 +1,6 @@
+{
+  "name": "Vento & Pistón Academy",
+  "description": "Plataforma interactiva de capacitación técnica, garantías, catálogo de unidades, juego Moto Runner y ranking para asesores de Vento Motocicletas y American Pistón.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
