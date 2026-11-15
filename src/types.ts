@@ -1,10 +1,40 @@
-export type AppTab = 'home' | 'catalog' | 'warranty' | 'training' | 'runner' | 'admin';
-export type BrandType = 'VENTO' | 'AMERICAN PISTON';
-export type QuizTopic = 'catalog' | 'warranty' | 'times' | 'mixed';
+export type Brand = 'VENTO' | 'AMERICAN PISTON';
+
+export type MotorcycleFamily =
+  | 'Motonetas'
+  | 'Ciudad'
+  | 'Rebeldes'
+  | 'Urban Sport'
+  | 'Trabajo'
+  | 'Doble Propósito'
+  | 'Adventure'
+  | 'Cuatrimotos'
+  | 'Deportiva';
+
+export type SpecSection =
+  | 'Motor'
+  | 'Transmisión'
+  | 'Frenos y Suspensión'
+  | 'Dimensiones y Capacidades'
+  | 'Equipamiento y Tecnología'
+  | 'Asentamiento y Garantía';
+
+export interface SpecFieldConfig {
+  id: string;
+  key: string;
+  label: string;
+  section: SpecSection;
+  isCore: boolean;
+  isVisible: boolean;
+  order: number;
+  placeholder: string;
+  createdAt?: unknown;
+  updatedAt?: unknown;
+}
 
 export interface Motorcycle {
   id: string;
-  brand: BrandType;
+  brand: Brand;
   family: string;
   model: string;
   displacementCc: number;
@@ -13,7 +43,7 @@ export interface Motorcycle {
   transmission: string;
   cooling: string;
   brakes: string;
-  tankLiters: number;
+  tankLiters: string;
   topSpeedKmh: number;
   breakInNotes: string;
   imageUrl: string;
@@ -21,78 +51,110 @@ export interface Motorcycle {
   highlights: string[];
   customSpecs?: Record<string, string>;
   hiddenFields?: string[];
+  createdAt?: unknown;
+  updatedAt?: unknown;
 }
+
+export type PolicyCategory =
+  | 'Condiciones'
+  | 'Asentamiento'
+  | 'Exclusiones'
+  | 'Servicios'
+  | 'Canales'
+  | 'Seguridad';
 
 export interface WarrantyPolicy {
   id: string;
-  brand: BrandType;
-  category: string;
+  brand: Brand;
+  category: PolicyCategory;
   title: string;
   summary: string;
   keyRule: string;
   details: string[];
   order: number;
   isActive: boolean;
+  createdAt?: unknown;
+  updatedAt?: unknown;
 }
 
 export interface TimeGuideEntry {
   id: string;
   code: string;
-  section: string;
+  section: 'VC' | 'VM';
   component: string;
   cuatrimotosTime: string;
   motonetasTime: string;
   motocicletasTime: string;
   notes: string;
-  accessories: string;
+  accessories: string[];
   isActive: boolean;
-}
-
-export interface SpecFieldConfig {
-  id: string;
-  key: string;
-  label: string;
-  section: string;
-  isCore: boolean;
-  isVisible: boolean;
-  order: number;
-  placeholder: string;
-}
-
-export interface AdminQuizItem {
-  id: string;
-  kind: 'manual' | 'auto';
-  topic: QuizTopic;
-  brand: BrandType;
-  sourceSection: string;
-  sourceField: string;
-  question: string;
-  options: string[];
-  correctIndex: number;
-  explanation: string;
-  targetScope: 'all' | 'family' | 'models';
-  targetFamily?: string;
-  targetModelIds?: string[];
-  isActive: boolean;
+  createdAt?: unknown;
+  updatedAt?: unknown;
 }
 
 export interface AdvisorProfile {
   uid: string;
-  email: string;
   displayName: string;
   branch: string;
-  role: 'admin' | 'advisor';
   quizPoints: number;
   gameHighScore: number;
   totalPoints: number;
   quizzesCompleted: number;
   correctAnswers: number;
   streakBest: number;
-  updatedAt?: string;
+  createdAt?: unknown;
+  updatedAt?: unknown;
 }
 
-export interface LocalUser {
-  uid: string;
-  email: string;
-  displayName: string;
+export type QuizTopic =
+  | 'Especificaciones'
+  | 'Familias'
+  | 'Garantías'
+  | 'Guía de Tiempos'
+  | 'Mixto';
+
+export interface QuizSession {
+  id: string;
+  advisorUid: string;
+  advisorName: string;
+  topic: QuizTopic;
+  score: number;
+  correctCount: number;
+  totalQuestions: number;
+  createdAt?: unknown;
 }
+
+export type QuestionKind = 'fixed' | 'template';
+export type TemplateScope = 'ALL' | 'FAMILY' | 'MODELS';
+
+export interface AdminQuizItem {
+  id: string;
+  kind: QuestionKind;
+  topic: Exclude<QuizTopic, 'Mixto'>;
+  brand: Brand | 'AMBAS';
+  sourceSection: string;
+  sourceField: string;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+  targetScope: TemplateScope;
+  targetFamily: string;
+  targetModelIds: string[];
+  isActive: boolean;
+  createdAt?: unknown;
+  updatedAt?: unknown;
+}
+
+export interface QuizQuestion {
+  id: string;
+  topic: Exclude<QuizTopic, 'Mixto'>;
+  brand: Brand | 'AMBAS';
+  sourceSection?: string;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+}
+
+export type AppTab = 'catalog' | 'warranty' | 'training' | 'runner' | 'admin';

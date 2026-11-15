@@ -1,26 +1,20 @@
-# Vento & Pistón Academy
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+</div>
 
-Plataforma interna de capacitación técnica, fichas de producto, pólizas de garantía, guía de tiempos CESVE y gamificación conectada a **Google Sheets + Google Apps Script**.
+# Run and deploy your AI Studio app
 
-## Estructura del Proyecto
+This contains everything you need to run your app locally.
 
-- `apps-script/Code.gs`: Backend REST API para Google Apps Script.
-- `src/services/sheetsApi.ts`: Cliente HTTP para comunicación con Google Sheets.
-- `src/data/seedData.ts`: Catálogo base inicial para poblar las hojas.
-- `src/components/`: Vistas de Catálogo, Garantías/Tiempos, Quiz, Moto Runner y Panel Admin.
+View your app in AI Studio: https://ai.studio/apps/90c770e8-beb0-476f-b830-be8e545d205e
 
-## Configuración Rápida
+## Run Locally
 
-1. Copia `.env.example` a `.env` y coloca tu URL de implementación de Google Apps Script en `VITE_SHEETS_API_URL`.
-2. Instala dependencias:
-   ```bash
-   npm install
-   ```
-3. Inicia en desarrollo:
-   ```bash
-   npm run dev
-   ```
-4. Compila para producción (GitHub Pages / Vercel / Netlify):
-   ```bash
-   npm run build
-   ```
+**Prerequisites:**  Node.js
+
+
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

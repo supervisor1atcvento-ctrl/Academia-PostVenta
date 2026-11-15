@@ -1,0 +1,192 @@
+{
+  "entities": {
+    "Motorcycle": {
+      "title": "Motorcycle",
+      "description": "Motorcycle unit specification for Vento Motocicletas or American Piston.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "brand": { "type": "string", "enum": ["VENTO", "AMERICAN PISTON"] },
+        "family": { "type": "string", "minLength": 2, "maxLength": 48 },
+        "model": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "displacementCc": { "type": "number" },
+        "engineType": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "powerHp": { "type": "string", "minLength": 1, "maxLength": 40 },
+        "transmission": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "cooling": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "brakes": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "tankLiters": { "type": "string", "minLength": 1, "maxLength": 30 },
+        "topSpeedKmh": { "type": "number" },
+        "breakInNotes": { "type": "string", "minLength": 2, "maxLength": 300 },
+        "imageUrl": { "type": "string", "minLength": 1, "maxLength": 600000 },
+        "isActive": { "type": "boolean" },
+        "highlights": { "type": "array" },
+        "customSpecs": { "type": "object" },
+        "hiddenFields": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "brand", "family", "model", "displacementCc", "engineType", "powerHp", "transmission", "cooling", "brakes", "tankLiters", "topSpeedKmh", "breakInNotes", "imageUrl", "isActive", "highlights", "createdAt", "updatedAt"]
+    },
+    "SpecFieldConfig": {
+      "title": "SpecFieldConfig",
+      "description": "Configurable technical datasheet field definition, section grouping, and visibility flag.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "key": { "type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "label": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "section": { "type": "string", "enum": ["Motor", "Transmisión", "Frenos y Suspensión", "Dimensiones y Capacidades", "Equipamiento y Tecnología", "Asentamiento y Garantía"] },
+        "isCore": { "type": "boolean" },
+        "isVisible": { "type": "boolean" },
+        "order": { "type": "number" },
+        "placeholder": { "type": "string", "minLength": 0, "maxLength": 120 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "key", "label", "section", "isCore", "isVisible", "order", "placeholder", "createdAt", "updatedAt"]
+    },
+    "AdminQuizQuestion": {
+      "title": "AdminQuizQuestion",
+      "description": "Admin-managed fixed quiz question or multi-model dynamic template referencing a spec/policy section.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "kind": { "type": "string", "enum": ["fixed", "template"] },
+        "topic": { "type": "string", "enum": ["Especificaciones", "Familias", "Garantías", "Guía de Tiempos"] },
+        "brand": { "type": "string", "enum": ["VENTO", "AMERICAN PISTON", "AMBAS"] },
+        "sourceSection": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "sourceField": { "type": "string", "minLength": 1, "maxLength": 64 },
+        "question": { "type": "string", "minLength": 5, "maxLength": 320 },
+        "options": { "type": "array" },
+        "correctIndex": { "type": "number" },
+        "explanation": { "type": "string", "minLength": 0, "maxLength": 500 },
+        "targetScope": { "type": "string", "enum": ["ALL", "FAMILY", "MODELS"] },
+        "targetFamily": { "type": "string", "minLength": 0, "maxLength": 48 },
+        "targetModelIds": { "type": "array" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "kind", "topic", "brand", "sourceSection", "sourceField", "question", "options", "correctIndex", "explanation", "targetScope", "targetFamily", "targetModelIds", "isActive", "createdAt", "updatedAt"]
+    },
+    "WarrantyPolicy": {
+      "title": "WarrantyPolicy",
+      "description": "Warranty policy rule or service schedule item for Vento or American Piston.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "brand": { "type": "string", "enum": ["VENTO", "AMERICAN PISTON"] },
+        "category": { "type": "string", "enum": ["Condiciones", "Asentamiento", "Exclusiones", "Servicios", "Canales", "Seguridad"] },
+        "title": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "summary": { "type": "string", "minLength": 2, "maxLength": 400 },
+        "keyRule": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "details": { "type": "array" },
+        "order": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "brand", "category", "title", "summary", "keyRule", "details", "order", "isActive", "createdAt", "updatedAt"]
+    },
+    "TimeGuideEntry": {
+      "title": "TimeGuideEntry",
+      "description": "Component or accessory warranty duration from the 2025 Guia de Tiempos de Garantia.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "code": { "type": "string", "minLength": 2, "maxLength": 16 },
+        "section": { "type": "string", "enum": ["VC", "VM"] },
+        "component": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "cuatrimotosTime": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "motonetasTime": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "motocicletasTime": { "type": "string", "minLength": 1, "maxLength": 160 },
+        "notes": { "type": "string", "minLength": 0, "maxLength": 500 },
+        "accessories": { "type": "array" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "code", "section", "component", "cuatrimotosTime", "motonetasTime", "motocicletasTime", "notes", "accessories", "isActive", "createdAt", "updatedAt"]
+    },
+    "AdvisorProfile": {
+      "title": "AdvisorProfile",
+      "description": "Public advisor leaderboard profile without PII.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "displayName": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "branch": { "type": "string", "minLength": 0, "maxLength": 60 },
+        "quizPoints": { "type": "number" },
+        "gameHighScore": { "type": "number" },
+        "totalPoints": { "type": "number" },
+        "quizzesCompleted": { "type": "number" },
+        "correctAnswers": { "type": "number" },
+        "streakBest": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName", "branch", "quizPoints", "gameHighScore", "totalPoints", "quizzesCompleted", "correctAnswers", "streakBest", "createdAt", "updatedAt"]
+    },
+    "QuizSession": {
+      "title": "QuizSession",
+      "description": "Completed advisor training session log.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "advisorUid": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "advisorName": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "topic": { "type": "string", "enum": ["Especificaciones", "Familias", "Garantías", "Guía de Tiempos", "Mixto"] },
+        "score": { "type": "number" },
+        "correctCount": { "type": "number" },
+        "totalQuestions": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "advisorUid", "advisorName", "topic", "score", "correctCount", "totalQuestions", "createdAt"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Authorized admin UID marker.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 2, "maxLength": 128 },
+        "addedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "addedAt"]
+    }
+  },
+  "firestore": {
+    "/motorcycles/{motoId}": {
+      "schema": { "$ref": "#/entities/Motorcycle" },
+      "description": "Motorcycle units catalog managed by admins and studied by advisors."
+    },
+    "/specFields/{fieldId}": {
+      "schema": { "$ref": "#/entities/SpecFieldConfig" },
+      "description": "Configurable technical spec sheet fields and visibility flags."
+    },
+    "/quizQuestions/{questionId}": {
+      "schema": { "$ref": "#/entities/AdminQuizQuestion" },
+      "description": "Admin-managed quiz questions and multi-model question templates."
+    },
+    "/warrantyPolicies/{policyId}": {
+      "schema": { "$ref": "#/entities/WarrantyPolicy" },
+      "description": "Warranty policy rules for Vento and American Piston."
+    },
+    "/timeGuides/{guideId}": {
+      "schema": { "$ref": "#/entities/TimeGuideEntry" },
+      "description": "Component and accessory warranty time guide entries (VC and VM)."
+    },
+    "/advisors/{advisorId}": {
+      "schema": { "$ref": "#/entities/AdvisorProfile" },
+      "description": "Advisor leaderboard entries keyed by auth UID."
+    },
+    "/quizSessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/QuizSession" },
+      "description": "Individual quiz training results owned by each advisor."
+    },
+    "/admins/{adminUid}": {
+      "schema": { "$ref": "#/entities/AdminUser" },
+      "description": "Explicit admin membership records."
+    }
+  }
+}
